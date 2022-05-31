@@ -82,7 +82,7 @@
 														<dt>
 															<div class="bid">ID {{item.request_id}} 
 																<a href="#none" 
-																	v-if="loginInfo.userid == item.userid"
+																	v-if="loginInfo.userid == item.userid || loginInfo.userid == 'admin'"
 																	class="request_work_del" 
 																	:data-reuqest-id="item.request_id" 
 																	:data-state="item.request_state"
