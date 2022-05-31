@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-/mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kjb.uixs.socket.MessageMapper">
+    <select id="selectCountMessageView" parameterType="String" resultType="String">
+    <![CDATA[
+		SELECT COUNT(*) 
+		FROM UIXS_MESSAGE 
+		WHERE 
+			RECEIVER_ID = #{receiver_id}
+		AND
+			READ_YN = 0
+	]]>
+	</select>
+	
+	<select id="selectNoReadMessage" parameterType="String" resultType="HashMap">
+		SELECT * 
+		FROM 
+		(
+			SELECT *
+			FROM UIXS_MESSAGE
+			WHERE 
+				RECEIVER_ID = #{receiver_id}
+			AND 
+				READ_YN = 0
+			ORDER BY WRITE_DATE DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<select id="selectAllMessage" parameterType="HashMap" resultType="HashMap">
+		SELECT *
+		FROM
+		(
+		    SELECT * 
+		    FROM
+		    (
+		        SELECT A.*, ROWNUM AS RNUM 
+		        FROM 
+		        (
+		            SELECT *
+		            FROM UIXS_MESSAGE
+		            WHERE 
+		                RECEIVER_ID = #{receiver_id}
+		            AND 
+		                READ_YN = 0
+		            ORDER BY WRITE_DATE DESC
+		        )A
+		    )
+		    WHERE RNUM >= #{start}
+		)
+		<![CDATA[
+		WHERE ROWNUM <= #{limit}
+		]]>
+	</select>
+	
+	<select id="selectUser" parameterType="HashMap" resultType="HashMap">
+		SELECT * 
+		FROM
+			UIXS_USER
+		<where>
+			<if test='receiver_auth != null and receiver_auth != ""'>
+			AND AUTH = #{receiver_auth}
+			</if>
+			<if test='receiver_part != null and receiver_part != ""'>
+			AND PART = #{receiver_part}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insertMsg" parameterType="HashMap">
+		INSERT INTO UIXS_MESSAGE
+		(
+			SEQ
+			, CONTENT
+			, SENDER_ID
+			, RECEIVER_ID			
+		)
+		VALUES
+		(
+			UIXS_MESSAGE_SEQ.NEXTVAL
+			, #{content}
+			, #{sender_id}
+			, #{receiver_id}
+		)
+	</insert>
+	
+	<update id="updateReadY" parameterType="HashMap">
+		UPDATE UIXS_MESSAGE 
+		SET READ_YN = 1, READ_DATE = SYSDATE
+		WHERE RECEIVER_ID = #{receiver_id}
+	</update>
+</mapper>

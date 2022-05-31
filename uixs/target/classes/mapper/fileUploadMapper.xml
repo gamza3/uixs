@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-/mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kjb.uixs.util.FileUploadMapper">
+	<insert id="insertUploadInfo" parameterType="FileUploadVO">
+        
+        <selectKey keyProperty="file_id" resultType="int" order="BEFORE">
+            SELECT UIXS_UPLOADFILES_SEQ.NEXTVAL AS file_id FROM DUAL
+        </selectKey>
+        
+        INSERT INTO UIXS_UPLOAD_FILES(
+            FILE_ID,
+            REL_TABLE,
+            REL_TABLE_KEY,
+            ORIGINAL_FILENAME,
+            SAVE_FILENAME,
+            UPLOAD_PATH
+        )
+        VALUES(
+            #{file_id},
+            #{rel_table},
+            #{rel_table_key},
+            #{original_filename},
+            #{save_filename},
+            #{upload_path}
+        )
+    </insert>
+    
+    <select id="selectUploadFileInfo" parameterType="HashMap" resultType="FileUploadVO">
+        SELECT *
+        FROM 
+            UIXS_UPLOAD_FILES
+        WHERE 
+            REL_TABLE = #{rel_table}
+        AND
+            REL_TABLE_KEY = #{rel_table_key}
+    </select>
+    
+    <select id="selectFileInfoWithRefs" parameterType="list" resultType="FileUploadVO">
+        SELECT *
+        FROM 
+            UIXS_UPLOAD_FILES
+        WHERE 
+            REL_TABLE IN
+            <foreach collection="array" item="item" separator="," open="(" close=")">
+				#{item}
+			</foreach>  
+        AND
+            REL_TABLE_KEY = #{rel_table_key}
+    </select>
+    
+    <select id="selectUploadFileOne" parameterType="String" resultType="FileUploadVO">
+        SELECT *
+        FROM
+            UIXS_UPLOAD_FILES
+        WHERE
+            FILE_ID = #{file_id}
+    </select>
+    
+    <delete id="deleteFileInfo" parameterType="String">
+        DELETE FROM UIXS_UPLOAD_FILES WHERE FILE_ID = #{file_id}
+    </delete>
+
+</mapper>

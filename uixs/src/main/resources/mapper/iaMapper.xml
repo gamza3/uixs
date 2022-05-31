@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-/mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kjb.uixs.ia.IaMapper">
+	<insert id="insertIaTree" parameterType="IaVO">
+		
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			SELECT UIXS_JATREE_SEQ.NEXTVAL AS id FROM DUAL
+		</selectKey>
+		
+		INSERT INTO UIXS_IA_TREE(
+			ID,
+			PARENT,
+			NAME,
+			TEXT,
+			LINK,
+			SITE_CODE,
+			SORT
+		)
+		VALUES(
+			#{id},
+			#{parent},
+			#{name},
+			#{text},
+			#{link},
+			#{site_code},
+			#{sort}
+		)
+	</insert>
+	
+	<select id="selectMaxSort" parameterType="IaVO" resultType="int">
+        SELECT NVL(MAX(SORT),0) AS SORT
+        FROM UIXS_IA_TREE
+        WHERE PARENT = #{parent}
+        AND SITE_CODE = #{site_code}
+	</select>
+	
+	<select id="iaList" parameterType="String" resultType="IaVO">
+		SELECT * FROM UIXS_IA_TREE 
+		START WITH PARENT = 0
+		CONNECT by PRIOR IA_NO = PARENT
+	</select>
+	
+	<select id="selectRequestIa" parameterType="list" resultType="IaVO">
+		SELECT *
+		FROM UIXS_IA_TREE
+		WHERE ID IN 
+		<foreach collection="array" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="selectIaTree" resultType="IaVO">
+	   SELECT 
+	       <if test="mode == null">
+	       LEVEL as DEPTH,
+	       </if>
+	       IT.ID
+           , CASE WHEN IT.PARENT = 0 THEN '#' ELSE TO_CHAR(IT.PARENT) END AS PARENT
+           , IT.TEXT
+           , IT.LINK 
+           , IT.UPDATE_DATE
+           , IT.SORT
+           , 
+           (
+           	SELECT COUNT(*) 
+           	FROM UIXS_UPLOAD_FILES
+           	WHERE REL_TABLE_KEY = IT.ID
+           	AND (REL_TABLE = 'IA_HTML' OR REL_TABLE = 'IA_PPT')
+           ) AS FILE_CNT
+       FROM UIXS_IA_TREE IT
+       WHERE
+           SITE_CODE = #{site_code}
+	   <choose>
+	       <when test="mode != null and mode == 'parent_only'">
+                 AND PARENT = 0
+                 ORDER BY SORT
+	       </when>
+	       <otherwise>
+			   START WITH PARENT = #{parent}
+		       CONNECT by PRIOR ID = PARENT
+		       ORDER SIBLINGS BY SORT
+	       </otherwise>
+	   </choose>
+	</select>
+	
+	<select id="selectIaTreeForView" resultType="IaVO">
+	   SELECT 
+	       <if test="mode == null">
+	       LEVEL as DEPTH,
+	       </if>
+	       IT.ID
+           , CASE WHEN IT.PARENT = 0 THEN '#' ELSE TO_CHAR(IT.PARENT) END AS PARENT
+           , IT.TEXT
+           , IT.LINK 
+           , IT.UPDATE_DATE
+           , IT.SORT
+           , UF.SAVE_FILENAME as VIEW_NAME
+           , UF.FILE_ID AS VIEW_ID
+           , (SELECT COUNT(*) FROM UIXS_REQUEST_IA WHERE IA_NO = IT.ID) WORK_REQUEST_CNT
+       FROM UIXS_IA_TREE IT LEFT OUTER JOIN UIXS_UPLOAD_FILES UF
+       ON (UF.REL_TABLE = 'IA_HTML' AND IT.ID = UF.REL_TABLE_KEY)
+       WHERE
+           SITE_CODE = #{site_code}
+	   <choose>
+	       <when test="mode != null and mode == 'parent_only'">
+                 AND PARENT = 0
+                 ORDER BY SORT
+	       </when>
+	       <otherwise>
+			   START WITH PARENT = #{parent}
+		       CONNECT by PRIOR ID = PARENT
+		       ORDER SIBLINGS BY SORT
+	       </otherwise>
+	   </choose>
+	</select>
+	
+	<select id="selectIaTreeForView2" resultType="IaVO">
+	SELECT 
+	    SUBSTR(SYS_CONNECT_BY_PATH(TEXT, '\'), 2) as PATH 
+	    , TEXT
+	    , ID
+	    , PARENT
+	    , LINK
+	    , REG_DATE
+	    , UPDATE_DATE
+	    , SORT
+	    , CONFIRM
+	    , PUBL
+	FROM 
+	    (SELECT * FROM UIXS_IA_TREE WHERE SITE_CODE = #{site_code})
+	START WITH PARENT = 0
+	CONNECT BY PRIOR ID = PARENT
+	ORDER SIBLINGS BY SORT ASC
+	</select>
+	
+	<!-- ia 상세조회 -->	
+	<select id="selectIaOne" parameterType="IaVO" resultType="IaVO">
+	SELECT 
+	    *
+	FROM 
+	    UIXS_IA_TREE
+	WHERE 
+		ID = #{id}
+	</select>
+	
+	<update id="updateIaTree" parameterType="IaVO">
+	   UPDATE UIXS_IA_TREE
+	   <set>
+	       <if test="parent != null and !parent.equals('')">
+	           PARENT = #{parent},
+	       </if>
+	       <if test="text != null and !text.equals('')">
+	           TEXT = #{text},
+	       </if>
+	       <if test="link != null and !link.equals('')">
+	           LINK = #{link},
+	       </if>
+	       <if test="update_date != null and !update_date.equals('')">
+	           UPDATE_DATE = #{update_date},
+	       </if>
+	       <if test="confirm != null and !confirm.equals('')">
+	           CONFIRM = #{confirm},
+	       </if>
+	       <if test="publ != null and !publ.equals('')">
+	           PUBL = #{publ},
+	       </if>
+	   </set>
+	   WHERE ID = #{id}
+	</update>
+	
+	<update id="updateIaSort" parameterType="IaVO">
+	   <foreach item="list" collection="sort_list" separator=";" open="DECLARE BEGIN" close="; END;">
+		   UPDATE UIXS_IA_TREE 
+		   SET
+		       SORT = #{list.sort}
+		   WHERE ID = #{list.id}
+	   </foreach>
+	</update>
+	
+	<!-- ia item 삭제 -->
+	<delete id="deleteIaTree" parameterType="String">
+		DELETE
+	  	FROM UIXS_IA_TREE 
+	  	WHERE ID IN
+	  	(
+			SELECT ID FROM UIXS_IA_TREE
+			START WITH ID = #{id}
+			CONNECT BY PRIOR ID =  PARENT
+		)
+	</delete>
+	
+	<!-- ia 경로 검색 -->
+	<select id="selectIaPath" parameterType="list" resultType="HashMap">
+	SELECT SUBSTR(SYS_CONNECT_BY_PATH(text,  '[>]'), 4) AS PATH, ID, LEVEL
+	FROM UIXS_IA_TREE
+	WHERE CONNECT_BY_ISLEAF = 1
+	START WITH ID  IN
+	<foreach collection="array" item="item" separator="," open="(" close=")">
+		#{item}
+	</foreach> 
+	CONNECT BY ID = PRIOR PARENT
+	</select>
+	
+	<!-- 메뉴 아이디에 요청된 작업 목록 -->
+	<select id="selectRequestWorkForIa" parameterType="HashMap" resultType="HashMap">
+		SELECT RL.* 
+		FROM 
+			UIXS_REQUEST_LIST RL LEFT OUTER JOIN UIXS_REQUEST_IA RI
+		ON 
+			(RI.REQUEST_ID = RL.REQUEST_ID)
+		WHERE 
+			RI.IA_NO = #{ia_no}
+		AND 
+			RL.REQUEST_STATE IN ('PENDING', 'WORKING', 'COMPLETE')
+		ORDER BY 
+			RL.REGDATE DESC
+	</select>
+</mapper>

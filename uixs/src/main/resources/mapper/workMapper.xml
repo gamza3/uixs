@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-/mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kjb.uixs.work.WorkMapper">
+	<insert id="insert" parameterType="WorkVO">
+        INSERT INTO UIXS_REQUEST_LIST(
+            REQUEST_ID,
+            REQUEST_TYPE,
+            REQUEST_TITLE,
+            REQUEST_CONTENT,
+            END_DATE,
+            SITE_CODE,
+            USERNAME,
+            USERID
+        )
+        VALUES(
+            #{request_id},
+            #{request_type},
+            #{request_title},
+            #{request_content},
+            #{end_date},
+            #{site_code},
+            #{username},
+            #{userid}
+        )
+    </insert>
+    
+
+    
+    <select id="selectRequestId" parameterType="String" resultType="String">
+        SELECT REQUEST_ID
+        FROM (
+            SELECT ROWNUM RNUM, SUBSTR(REQUEST_ID, LENGTH(REQUEST_ID)-5, LENGTH(REQUEST_ID)) AS REQUEST_ID
+            FROM UIXS_REQUEST_LIST 
+            ORDER BY SUBSTR(REQUEST_ID, LENGTH(REQUEST_ID)-5, LENGTH(REQUEST_ID)) DESC
+        )
+        WHERE ROWNUM = 1
+    </select>
+    
+    
+    
+    <insert id="insertRequestIa" parameterType="java.util.Map">
+        INSERT INTO UIXS_REQUEST_IA(
+            REQUEST_ID,
+            IA_NO
+        )
+        VALUES (
+            #{request_id},
+            #{ia_no}
+        )
+    </insert>
+    
+    
+    
+    <!-- 작업요청내역 전체목록 검색 -->
+    <select id="selectRequestList" resultType="WorkVO">
+	    SELECT *
+			FROM
+			(
+		    	SELECT *
+			    FROM
+			    (
+			    	SELECT A.*, ROWNUM AS SEQ
+			        FROM
+			        (
+			        SELECT * 
+			        FROM 
+			            UIXS_REQUEST_LIST 
+			        WHERE 
+			            (
+			            REQUEST_STATE = 'PENDING' 
+			            OR 
+			            REQUEST_STATE = 'CANCEL'
+			            )
+			       	<if test="site_code != null and !site_code.equals('')">
+			       		AND SITE_CODE = #{site_code}
+			       	</if>
+			       	<if test="search_key != null and !search_key.equals('')">
+			       		<choose>
+		               		<when test="search_key.equals('ALL')">
+		                	AND	(
+			                	REQUEST_ID LIKE '%'||#{search_word}||'%' OR
+						        REQUEST_TITLE LIKE '%'||#{search_word}||'%' OR
+						        REQUEST_CONTENT LIKE '%'||#{search_word}||'%' OR
+						        USERNAME LIKE '%'||#{search_word}||'%'
+						    )
+						    </when>
+		               		<otherwise>
+		               		AND ${search_key} LIKE '%'||#{search_word}||'%'
+		               		</otherwise>
+		               	</choose>
+			       	</if>
+			        ORDER BY REGDATE DESC
+		        )A
+	        )
+	        WHERE SEQ >= #{start} 
+        )
+		<![CDATA[
+		WHERE ROWNUM <= #{limit}
+		]]>			        
+    </select>
+    
+    
+    
+    <!-- 작업요청내역 상세 검색 -->
+    <select id="selectRequestOne" parameterType="String" resultType="WorkVO">
+        <![CDATA[
+        SELECT 
+             REQUEST_ID
+            , REQUEST_TYPE 
+            , REQUEST_TITLE 
+            , REQUEST_CONTENT 
+            , END_DATE 
+            , REQUEST_STATE 
+            , CANCEL_CONTENT
+            , REQUEST_IA
+            , REGDATE
+            , USERNAME
+            , USERID
+        FROM (
+            SELECT 
+                LIST.*
+                , 
+                (
+                	SELECT 
+                		LISTAGG(IA_NO, ',') WITHIN GROUP (ORDER BY IA_NO) AS IA_NO 
+                	FROM UIXS_REQUEST_IA 
+                	WHERE 
+                		REQUEST_ID = LIST.REQUEST_ID
+                ) AS REQUEST_IA
+            FROM 
+                UIXS_REQUEST_LIST LIST
+            WHERE 
+                LIST.REQUEST_ID = #{requst_id}
+        ) 
+        ]]>
+    </select>
+    
+
+    
+    <!-- 작업진행내역 상세 검색 -->
+    <select id="selectWorkOne" parameterType="String" resultType="WorkVO">
+        <![CDATA[
+        SELECT 
+             REQUEST_ID
+            , REQUEST_TYPE 
+            , REQUEST_TITLE 
+            , REQUEST_CONTENT 
+            , END_DATE 
+            , REQUEST_STATE 
+            , CANCEL_CONTENT
+            , USERNAME
+            , USERID
+            , WORK_ID
+            , PART
+            , PLAN
+            , DESIGN
+            , PUBLISH
+            , REQUEST_IA
+            , REGDATE
+            , RESPONSE_DATE
+            , PLAN_REQ_SDATE
+            , PLAN_REQ_EDATE
+            , DESIGN_REQ_SDATE
+            , DESIGN_REQ_EDATE
+            , PUBLISH_REQ_SDATE
+            , PUBLISH_REQ_EDATE
+        FROM (
+            SELECT 
+                LIST.*
+                , WS.WORK_ID
+                , WS.PART
+                , WS.PLAN
+                , WS.DESIGN
+                , WS.PUBLISH
+                , WS.RESPONSE_DATE
+                , WS.PLAN_REQ_SDATE
+                , WS.PLAN_REQ_EDATE
+                , WS.DESIGN_REQ_SDATE
+                , WS.DESIGN_REQ_EDATE
+                , WS.PUBLISH_REQ_SDATE
+                , WS.PUBLISH_REQ_EDATE
+                ,
+                (
+                	SELECT 
+                		LISTAGG(IA_NO, ',') WITHIN GROUP (ORDER BY IA_NO) AS IA_NO 
+                	FROM UIXS_REQUEST_IA 
+                	WHERE 
+                		REQUEST_ID = LIST.REQUEST_ID
+                ) AS REQUEST_IA
+            FROM 
+                UIXS_REQUEST_LIST LIST
+                ,UIXS_WORK_STATE WS
+            WHERE 
+                LIST.REQUEST_ID = WS.REQUEST_ID
+            AND
+                LIST.REQUEST_ID = #{requst_id}
+            ) 
+        ]]>
+    </select>
+    
+    
+    <update id="updateRequestWorkState"  parameterType="WorkVO" >
+        UPDATE 
+           UIXS_REQUEST_LIST
+        SET 
+           REQUEST_STATE = #{request_state}
+           <if test="complete_date != null and !complete_date.equals('')">
+           ,COMPLETE_DATE = #{complete_date}
+           </if>
+           <if test="cancel_content != null and !cancel_content.equals('')">
+           ,CANCEL_CONTENT = #{cancel_content}
+           </if>
+           <if test="end_date != null and !end_date.equals('')">
+           ,END_DATE = #{end_date}
+           </if>
+        WHERE
+           REQUEST_ID = #{request_id}
+    </update>
+    
+    
+    <!-- 작업진행내역 전체목록 검색 -->
+    <select id="selectProcessList" resultType="HashMap">
+	    SELECT *
+		FROM
+		(
+	    	SELECT *
+		    FROM
+		    (
+		    	SELECT A.*, ROWNUM AS SEQ
+		        FROM
+		        (
+		        	SELECT * FROM (
+				        SELECT 
+				            RL.*
+				            , WS.WORK_ID
+				            , WS.PART
+				            , WS.PLAN
+				            , WS.DESIGN
+				            , WS.PUBLISH
+				            ,(SELECT NVL(TO_CHAR(MAX(REGDATE), 'YYYY-MM-DD HH24:MM:SS'), 0) 
+				            	FROM UIXS_BOARD 
+				            	WHERE 
+				            		REF='WORK_LIST' 
+				            	AND REF_ID=WS.WORK_ID
+				            ) AS CMT_REGDATE
+				        FROM 
+				            UIXS_REQUEST_LIST RL, UIXS_WORK_STATE WS
+				        WHERE
+				        	RL.SITE_CODE = #{site_code}
+				        AND
+				            RL.REQUEST_ID = WS.REQUEST_ID
+				        AND 
+				            RL.REQUEST_STATE = 'WORKING'
+				        <if test="search_key != null and !search_key.equals('')">
+				       		<choose>
+			               		<when test="search_key.equals('ALL')">
+			                	AND	(
+				                	RL.REQUEST_ID LIKE '%'||#{search_word}||'%' OR
+							        RL.REQUEST_TITLE LIKE '%'||#{search_word}||'%' OR
+							        RL.REQUEST_CONTENT LIKE '%'||#{search_word}||'%' OR
+							        RL.USERNAME LIKE '%'||#{search_word}||'%'
+							    )
+							    </when>
+			               		<otherwise>
+			               		AND RL.${search_key} LIKE '%'||#{search_word}||'%'
+			               		</otherwise>
+			               	</choose>
+				       	</if> 
+				       	<if test="search_sort != null and !search_sort.equals('')">
+				       	AND (
+				       		CASE 
+						        WHEN PART = 'PUBLISH' THEN PUBLISH
+						        WHEN PART = 'PLAN' THEN PLAN
+						        WHEN PART = 'DESIGN' THEN DESIGN 
+						    END
+						    ) = #{search_sort}
+						</if>
+				        ORDER BY RL.REGDATE DESC
+				    ) ORDER BY CMT_REGDATE DESC, REGDATE DESC
+		        )A
+	        )
+	        WHERE SEQ >= #{start} 
+        )
+		<![CDATA[
+		WHERE ROWNUM <= #{limit}
+		]]>
+    </select>
+    
+    
+    <insert id="insertWorkList" parameterType="WorkVO">
+        <selectKey keyProperty="work_id" resultType="int" order="BEFORE">
+            SELECT UIXS_WORKLIST_SEQ.NEXTVAL AS work_id FROM DUAL
+        </selectKey>
+        
+        <![CDATA[
+        INSERT INTO UIXS_WORK_LIST
+        (
+            WORK_ID
+            ,REQUEST_ID
+            ,STATE
+        )
+        VALUES
+        (
+            #{work_id}
+            ,#{request_id}
+            ,#{state}
+        )
+        ]]>
+    </insert>
+    
+    <insert id="insertWorkState">
+        <![CDATA[
+        INSERT INTO UIXS_WORK_STATE
+        (
+            WORK_ID
+            , REQUEST_ID
+            , PART
+        )
+        VALUES
+        (
+            #{work_id}
+            , #{request_id}
+            , #{part}
+        )
+        ]]>
+    </insert>
+    
+    <update id="updateWorkState" parameterType="WorkVO">
+        <![CDATA[
+        UPDATE UIXS_WORK_STATE 
+        ]]>
+        <set>
+            PART = #{part}
+            <if test="plan != null and !plan.equals('')">
+            , PLAN = #{plan}
+            </if>
+            <if test="design != null and !design.equals('')">
+            , DESIGN = #{design}
+            </if>
+            <if test="publish != null and !publish.equals('')">
+            , PUBLISH = #{publish}
+            </if>
+            <!-- 기획 검수요청 일자 -->
+            <if test="plan_req_sdate != null and !plan_req_sdate.equals('')">
+            , PLAN_REQ_SDATE = #{plan_req_sdate}
+            </if>
+            <!-- 디자인 검수요청 일자 -->
+            <if test="design_req_sdate != null and !design_req_sdate.equals('')">
+            , DESIGN_REQ_SDATE = #{design_req_sdate}
+            </if>
+            <!-- 퍼블리싱 검수요청 일자 -->
+            <if test="publish_req_sdate != null and !publish_req_sdate.equals('')">
+            , PUBLISH_REQ_SDATE = #{publish_req_sdate}
+            </if>
+            <!-- 기획 검수완료 일자 -->
+            <if test="plan_req_edate != null and !plan_req_edate.equals('')">
+            , PLAN_REQ_EDATE = #{plan_req_edate}
+            </if>
+            <!-- 디자인 검수완료 일자 -->
+            <if test="design_req_edate != null and !design_req_edate.equals('')">
+            , DESIGN_REQ_EDATE = #{design_req_edate}
+            </if>
+            <!-- 퍼블리싱 검수완료 일자 -->
+            <if test="publish_req_edate != null and !publish_req_edate.equals('')">
+            , PUBLISH_REQ_EDATE = #{publish_req_edate}
+            </if>
+        </set>
+        <![CDATA[
+        WHERE
+            WORK_ID = #{work_id}
+        AND
+            REQUEST_ID = #{request_id}
+        ]]>
+    </update>
+    
+    <!-- 작업 완료내역  -->
+    <select id="selectCompleteList" parameterType="HashMap" resultType="WorkVO">
+    	<![CDATA[
+        SELECT *
+		FROM
+		(
+		    SELECT *
+		    FROM
+		    (
+		        SELECT A.*, ROWNUM AS SEQ
+		        FROM
+		        (
+		            SELECT RS.*, WS.WORK_ID, WS.STATE
+		            FROM 
+		            	UIXS_REQUEST_LIST RS
+		                , UIXS_WORK_LIST WS
+		                ]]>
+		           	<where>
+		                AND RS.REQUEST_ID = WS.REQUEST_ID
+		            	AND RS.SITE_CODE = #{site_code}
+		                AND RS.REQUEST_STATE = 'COMPLETE'
+		                <if test="search_key != null and !search_key.equals('')">
+		                	<choose>
+		                		<when test="search_key.equals('ALL')">
+			                	AND	(
+				                	RS.REQUEST_ID LIKE '%'||#{search_word}||'%' OR
+							        RS.REQUEST_TITLE LIKE '%'||#{search_word}||'%' OR
+							        RS.REQUEST_CONTENT LIKE '%'||#{search_word}||'%' OR
+							        RS.USERNAME LIKE '%'||#{search_word}||'%'
+							    )
+							    </when>
+		                		<otherwise>
+		                		AND RS.${search_key} LIKE '%'||#{search_word}||'%'
+		                		</otherwise>
+		                	</choose>
+				       	</if>
+		            </where>
+		            ORDER BY 
+	            	<if test="orderkey != null and orderkey.equals('regdate')">
+	            		REGDATE <if test='listsort != null and listsort == "d"'>DESC</if>
+	            	</if>
+	           		            	
+	            	<if test="orderkey != null and orderkey.equals('completedate')">
+	            		COMPLETE_DATE <if test='listsort != null and listsort == "d"'>DESC</if>
+	            	</if>
+		        )A
+		    )
+		    WHERE SEQ >= #{start} 
+		) 
+		<![CDATA[
+		WHERE ROWNUM <= #{limit}
+		]]>
+    </select>
+	
+	<!-- 검수요청/검수완료 카운트 쿼리 -->
+	<select id="selectConfirmCount" parameterType="HashMap" resultType="hashmap">
+		SELECT NVL(SUM(REQUEST_CNT), 0) AS REQUEST_CNT, NVL(SUM(COMPLETE_CNT), 0) AS COMPLETE_CNT
+		FROM
+		(
+		    SELECT  
+		    (
+		        SELECT COUNT(*) FROM UIXS_WORK_STATE 
+		        WHERE REQUEST_ID = RL.REQUEST_ID
+		        AND (PLAN = 'CONFIRM_REQUEST' or DESIGN = 'CONFIRM_REQUEST' or PUBLISH = 'CONFIRM_REQUEST')
+		    ) AS REQUEST_CNT,
+		    (
+		        SELECT COUNT(*) FROM UIXS_WORK_STATE 
+		        WHERE REQUEST_ID = RL.REQUEST_ID
+		        AND (PLAN = 'CONFIRM_COMPLETE' or DESIGN = 'CONFIRM_COMPLETE' or PUBLISH = 'CONFIRM_COMPLETE')
+		    ) AS COMPLETE_CNT
+		    FROM UIXS_REQUEST_LIST RL
+		    WHERE SITE_CODE = #{site_code}
+		    AND REQUEST_STATE = 'WORKING'
+		    <if test="search_key != null and !search_key.equals('')">
+	       		<choose>
+               		<when test="search_key.equals('ALL')">
+                	AND	(
+	                	RL.REQUEST_ID LIKE '%'||#{search_word}||'%' OR
+				        RL.REQUEST_TITLE LIKE '%'||#{search_word}||'%' OR
+				        RL.REQUEST_CONTENT LIKE '%'||#{search_word}||'%' OR
+				        RL.USERNAME LIKE '%'||#{search_word}||'%'
+				    )
+				    </when>
+               		<otherwise>
+               		AND RL.${search_key} LIKE '%'||#{search_word}||'%'
+               		</otherwise>
+               	</choose>
+	       	</if>
+		) 
+	</select>
+	
+	
+	<delete id="deleteWorkList" parameterType="String">
+		DELETE FROM UIXS_WORK_LIST WHERE REQUEST_ID = #{request_id}
+	</delete>
+	
+	<delete id="deleteWorkState" parameterType="String">
+		DELETE FROM UIXS_WORK_STATE WHERE REQUEST_ID = #{request_id}
+	</delete>
+	
+	<!-- 현재 월에 완료되어야하는 작업목록 -->
+	<select id="selectRequestWorkWithMonth" parameterType="ParamMap" resultType="ParamMap">
+	SELECT * 
+		FROM UIXS_REQUEST_LIST 
+	WHERE 
+		REQUEST_STATE NOT IN('DELETE', 'COMPLETE') 
+	AND TO_CHAR(END_DATE, 'YYYY-MM-DD') BETWEEN #{end_date1} AND #{end_date2}
+	<if test="site_code != null and !site_code.equals('')">
+	AND SITE_CODE = #{site_code}
+	</if>
+	</select>
+	
+</mapper>

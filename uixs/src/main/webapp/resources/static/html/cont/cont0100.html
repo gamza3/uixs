@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>광주은행</title>
+<link rel="stylesheet" href="../../css/common.css">
+<script type="text/javascript" src="../../js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui.js"></script>
+
+<script type="text/javascript" src="../../js/html.popup.js"></script>
+<script type="text/javascript" src="../../js/kjbui.js"></script>
+
+</head>
+<body>
+	<div class="wrapper">
+		<!--header-->
+		<div class="header">
+			<div>
+				<h1><a href="#none"><img src="../../img/img_logo.png" alt=""></a></h1>
+				<div class="channel_select mb40">
+					<div class="input_section">
+						<ul class="input_wrap">
+							<li class="input_area">
+								<label for="">채널명</label>
+								<div class="select_list"> <!--dropdown  열릴때 on클래스 추가, 아래 ul태그 block-->
+									<div class="active">
+										모바일뱅킹 <span class="bul_type01">개인</span>
+									</div>
+									<ul style="display: none; z-index: 10000;" class="option-list">
+										<li><a href="#none">모바일뱅킹 <span class="bul_type01">개인</span></a></li>
+										<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										<li><a href="../chan/chan0100.html">채널관리</a></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<nav>
+					<ul>
+						<li><a href="#none" class="on">작업관리</a></li>
+						<li><a href="#none">화면목록</a></li>
+						<li><a href="#none">권한관리</a></li>
+						<li><a href="#none">파일관리</a></li>
+					</ul>
+				</nav>
+				<a href="#none" class="btn_logout" style="display: none;">로그아웃</a>
+			</div>
+		</div>
+		<!--// header-->
+		<!--container-->
+		<div class="container">
+			
+			<div class="content">
+				<div class="content_inner">
+					<div class="tit_area">
+                        <h2>권한관리</h2>
+						<span class="tit_btn_area">
+							<a href="#none" class="btn_mid_type01" id="btn-edit-cont">권한수정</a>
+						</span>
+                    </div>
+                    <div class="board_table"> 
+						<table class="tbl_st1">
+							<colgroup>
+								<col class="col-01" width="4%">
+                                <col class="col-01" width="10%">
+								<col class="col-02" width="12%">
+								<col class="col-03" width="10%">
+								<col class="col-03" width="15%">
+								<col class="col-03" width="15%">
+								<col class="col-03" width="20%">
+								<col class="col-03" width="*">
+							</colgroup>
+							<thead>
+								<tr>
+									<th scope="col"></th>
+                                    <th scope="col"><span>이름</span></th>
+									<th scope="col"><span>부서</span></th>
+									<th scope="col"><span>직책</span></th>
+									<th scope="col"><span>담당업무</span></th>
+									<th scope="col"><span>연락처</span></th>
+									<th scope="col"><span>이메일</span></th>
+									<th scope="col"><span>권한여부</span></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+                                        <div class="input_wrap" style="padding: 0 0; max-width: none;">
+                                            <div class="input_area cal_check">
+                                                <div class="check" style="bottom: 0; top: -3px;">
+                                                    <input type="checkbox" id="cont_01">
+                                                    <label for="cont_01"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>홍길동</td>
+									<td>IT개발부</td>
+									<td>대리</td>
+									<td>퍼블리셔</td>
+									<td>010-0000-0000</td>
+									<td>ex@sample.com</td>
+									<td>
+                                        <ul>
+                                            <li style="text-align: center;">작업자</li>
+                                            <!-- <li style="text-align: center;">파일관리</li> -->
+                                        </ul>
+                                    </td>
+								</tr>
+								<tr>
+									<td>
+                                        <div class="input_wrap" style="padding: 0 0; max-width: none;">
+                                            <div class="input_area cal_check">
+                                                <div class="check" style="bottom: 0; top: -3px;">
+                                                    <input type="checkbox" id="cont_02">
+                                                    <label for="cont_02"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>김관리</td>
+									<td>UXUI부서</td>
+									<td>차장</td>
+									<td>유지보수PM</td>
+									<td>010-0000-0000</td>
+									<td>ex@sample.com</td>
+									<td>
+                                        <ul>
+                                            <li style="text-align: center;">현업</li>
+                                            <!-- <li style="text-align: center;">작업관리</li> -->
+                                            <!-- <li style="text-align: center;">파일관리</li> -->
+                                        </ul>
+                                    </td>
+								</tr>
+                                <tr>
+									<td>
+                                        <div class="input_wrap" style="padding: 0 0; max-width: none;">
+                                            <div class="input_area cal_check">
+                                                <div class="check" style="bottom: 0; top: -3px;">
+                                                    <input type="checkbox" id="cont_03">
+                                                    <label for="cont_03"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>박현업</td>
+									<td>UXUI부서</td>
+									<td>부장</td>
+									<td>여신관리</td>
+									<td>010-0000-0000</td>
+									<td>ex@sample.com</td>
+									<td>
+                                        <ul>
+                                            <li style="text-align: center;">현업</li>
+                                            <!-- <li style="text-align: center;">작업관리</li> -->
+                                            <!-- <li style="text-align: center;">파일관리</li> -->
+                                        </ul>
+                                    </td>
+								</tr>
+                                <tr>
+									<td>
+                                        <div class="input_wrap" style="padding: 0 0; max-width: none;">
+                                            <div class="input_area cal_check">
+                                                <div class="check" style="bottom: 0; top: -3px;">
+                                                    <input type="checkbox" id="cont_04">
+                                                    <label for="cont_04"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>김기획</td>
+									<td>UXUI부서</td>
+									<td>차장</td>
+									<td>기획</td>
+									<td>010-0000-0000</td>
+									<td>ex@sample.com</td>
+									<td>
+                                        <ul>
+                                            <li style="text-align: center;">작업자</li>
+                                            <!-- <li style="text-align: center;">작업관리</li> -->
+                                            <!-- <li style="text-align: center;">파일관리</li> -->
+                                        </ul>
+                                    </td>
+								</tr>
+								<tr>
+									<td>
+                                        <div class="input_wrap" style="padding: 0 0; max-width: none;">
+                                            <div class="input_area cal_check">
+                                                <div class="check" style="bottom: 0; top: -3px;">
+                                                    <input type="checkbox" id="cont_05">
+                                                    <label for="cont_05"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>박기획</td>
+									<td>UXUI부서</td>
+									<td>대리</td>
+									<td>기획</td>
+									<td>010-0000-0000</td>
+									<td>ex@sample.com</td>
+									<td>
+                                        <ul>
+                                            <li style="text-align: center;">작업자</li>
+                                            <!-- <li style="text-align: center;">작업관리</li> -->
+                                            <!-- <li style="text-align: center;">파일관리</li> -->
+                                        </ul>
+                                    </td>
+								</tr>
+                                <tr>
+									<td>
+                                        <div class="input_wrap" style="padding: 0 0; max-width: none;">
+                                            <div class="input_area cal_check">
+                                                <div class="check" style="bottom: 0; top: -3px;">
+                                                    <input type="checkbox" id="cont_06">
+                                                    <label for="cont_06"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>정디자</td>
+									<td>UXUI부서</td>
+									<td>과장</td>
+									<td>디자인</td>
+									<td>010-0000-0000</td>
+									<td>ex@sample.com</td>
+									<td>
+                                        <ul>
+                                            <li style="text-align: center;">일반사용자</li>
+                                            <!-- <li style="text-align: center;">파일관리</li> -->
+                                        </ul>
+                                    </td>
+								</tr>
+                                <tr>
+									<td>
+                                        <div class="input_wrap" style="padding: 0 0; max-width: none;">
+                                            <div class="input_area cal_check">
+                                                <div class="check" style="bottom: 0; top: -3px;">
+                                                    <input type="checkbox" id="cont_07">
+                                                    <label for="cont_07"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>정현업</td>
+									<td>IT개발부</td>
+									<td>대리</td>
+									<td>IT개발</td>
+									<td>010-0000-0000</td>
+									<td>ex@sample.com</td>
+									<td>
+                                        <ul>
+                                            <li style="text-align: center;">일반사용자</li>
+                                            <!-- <li style="text-align: center;">파일관리</li> -->
+                                        </ul>
+                                    </td>
+								</tr>
+							 </tbody>
+						</table>
+						<div class="paging-area">
+							<ul>
+								<li><a href="#none" class="prev-first"></a></li>
+								<li><a href="#none" class="prev"></a></li>
+								<li><a href="#none" class="active">1</a></li>
+								<li><a href="#none">2</a></li>
+								<li><a href="#none" class="next"></a></li>
+								<li><a href="#none" class="next-last"></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--// container-->
+	</div>
+	
+</body>
+
+</html>

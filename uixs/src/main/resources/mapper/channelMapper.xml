@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-/mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kjb.uixs.channel.ChannelMapper">
+    <insert id="insertChannel" parameterType="ChannelVO">
+    <![CDATA[
+		INSERT INTO UIXS_CHANNEL(
+			CODE
+			,NAME
+			,USEYN
+			,CUSER
+			,DEVICE
+		)
+		VALUES(
+			#{code}
+			,#{name}
+			,#{useyn}
+			,#{cuser}
+			,#{device}
+		)
+	]]>
+	</insert>
+	
+	
+	<select id="channels" resultType="ChannelVO">
+		SELECT 
+			C.* 
+			,
+			(
+				SELECT COUNT(*) FROM UIXS_REQUEST_LIST WHERE SITE_CODE = C.CODE AND REQUEST_STATE = 'PENDING'
+			)AS REQ_PENDING_CNT
+			,
+			(
+			    SELECT COUNT(*) FROM UIXS_REQUEST_LIST WHERE SITE_CODE = C.CODE AND REQUEST_STATE = 'WORKING'
+			)AS REQ_WORKING_CNT
+			,
+			(
+			    SELECT COUNT(*) FROM UIXS_REQUEST_LIST WHERE SITE_CODE = C.CODE AND REQUEST_STATE = 'COMPLETE'
+			)AS REQ_COMPLETE_CNT
+		FROM 
+			UIXS_CHANNEL C
+		ORDER BY C.REGDATE DESC
+	</select>
+	
+	<select id="selectChannelOne" parameterType="String" resultType="ChannelVO">
+	<![CDATA[
+		SELECT 
+			*
+		FROM
+			UIXS_CHANNEL
+		WHERE
+			CODE = #{code}
+	]]>
+	</select>
+	
+	<update id="updateChannel" parameterType="ChannelVO">
+		UPDATE UIXS_CHANNEL
+		<set>
+			<if test="name != null and !name.equals('')">NAME = #{name},</if>
+			<if test="useyn != null and !useyn.equals('')">USEYN = #{useyn},</if>
+			<if test="cuser != null and !cuser.equals('')">CUSER = #{cuser},</if>
+			<if test="device != null and !device.equals('')">DEVICE = #{device},</if>
+		</set>
+		WHERE
+			CODE = #{code}
+	</update>
+</mapper>

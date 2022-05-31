@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>광주은행</title>
+<link rel="stylesheet" href="../../css/common.css">
+<script type="text/javascript" src="../../js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui.js"></script>
+
+<script type="text/javascript" src="../../js/html.popup.js"></script>
+<script type="text/javascript" src="../../js/kjbui.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#calendar-pop').find('.btn_edit_close, td > div').click(function () {
+            $('#calendar-pop').hide();
+        });
+    });
+</script>
+</head>
+<body>
+	<div class="wrapper">
+		<!--header-->
+		<div class="header">
+			<div>
+				<h1><a href="#none"><img src="../../img/img_logo.png" alt=""></a></h1>
+				<div class="channel_select mb40">
+					<div class="input_section">
+						<ul class="input_wrap">
+							<li class="input_area">
+								<label for="">채널명</label>
+								<div class="select_list"> <!--dropdown  열릴때 on클래스 추가, 아래 ul태그 block-->
+									<div class="active">
+										모바일뱅킹 <span class="bul_type01">개인</span>
+									</div>
+									<ul style="display: none; z-index: 10000;" class="option-list">
+										<li><a href="#none">모바일뱅킹 <span class="bul_type01">개인</span></a></li>
+										<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										<li><a href="../chan/chan0100.html">채널관리</a></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<nav>
+					<ul>
+						<li><a href="#none" class="on">작업관리</a></li>
+						<li><a href="#none">화면목록</a></li>
+						<li><a href="#none">권한관리</a></li>
+						<li><a href="#none">파일관리</a></li>
+					</ul>
+				</nav>
+				<a href="#none" class="btn_logout" style="display: none;">로그아웃</a>
+			</div>
+		</div>
+		<!--// header-->
+		<!--container-->
+		<div class="container">
+			
+			<div class="content">
+				<div class="content_inner">
+					<div class="tit_area">
+                        <h2>작업요청하기</h2>
+                    </div>
+					
+					<div class="input_section mt20">
+                        <ul class="input_wrap" style="padding-top: 0;">
+                            <li class="input_area">
+								<ul class="box_type_check">
+									<li class="check-group">
+										<input type="checkbox" id="team01" value="new" class="check-group-ins">
+										<label for="team01" style="margin-bottom: 0;">신규</label>
+									</li>
+									<li class="check-group">
+										<input type="checkbox" id="team02" value="change" class="check-group-ins">
+										<label for="team02" style="margin-bottom: 0;">변경</label>
+									</li>
+								</ul>
+							</li>
+                            <!-- <li class="input_area" style="overflow: hidden;" id="select-menu-area">
+                                <label for="">메뉴선택</label>
+                                <select class="selectbox" style="width: 48%; display: inline-block; float: left; margin-right: 10px;">
+                                    <option>이체</option>
+                                    <option>조회</option>
+                                    <option>세금공과금</option>
+                                    <option>펀드</option>
+                                    <option>공제</option>
+                                    <option>인증서</option>
+                                </select>
+                                <select class="selectbox" style="width: 50%; display: inline-block; float: left;">
+                                    <option>신규추가</option>
+                                    <option>즉시이체</option>
+                                    <option>이체결과조회</option>
+                                    <option>타행자동이체</option>
+                                    <option>당행자동이체</option>
+                                    <option>당행자동이체</option>
+                                </select>
+                            </li> -->
+							<li class="input_area">
+                                <label for="">제목</label>
+                                <input type="text" placeholder="제목을 입력하세요" value="빠른이체를 추가해주세요.">
+                            </li>
+							<li class="input_area">
+                                <label for="">수정사항</label>
+                                <textarea placeholder="내용을 입력해주세요.">이체안에 빠른이체를 추가해주세요.</textarea>
+                            </li>
+							<li class="input_area">
+                                <label for="">작업완료일</label>
+                                <input type="text" placeholder="날짜를 선택해주세요" class="datepick" value="2021-06-10">
+								<div class="edit_pop" style="display: none; z-index: 10000;" id="calendar-pop" >
+                                    <div class="edit_tit">
+                                        작업완료일
+                                        <a href="#none" class="btn_edit_close" title="레이어팝업 닫기"></a>
+                                    </div>
+                                    <div class="edit_data">
+                                        <div class="calendar_select">
+                                            <div class="btn_calendar">
+                                                <a href="#none" class="btn_pre" title="이전 달로 이동"></a>
+                                                <strong>2021<span>May</span></strong>
+                                                <a href="#none" class="btn_next" title="다음 달로 이동"></a>
+                                            </div>
+                                            <div class="calendar_table">
+                                                <table class="">
+                                                    <caption>달력영역</caption>
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Sun</th>
+                                                            <th scope="col">Mon</th>
+                                                            <th scope="col">Tue</th>
+                                                            <th scope="col">Wed</th>
+                                                            <th scope="col">Thu</th>
+                                                            <th scope="col">Fri</th>
+                                                            <th scope="col">Sat</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><div>1</div></td>
+                                                            <td><div>2</div></td>
+                                                            <td><div>3</div></td>
+                                                            <td><div>4</div></td>
+                                                            <td><div>5</div></td>
+                                                            <td><div>6</div></td>
+                                                            <td><div>7</div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div>8</div></td>
+                                                            <td><div>9</div></td>
+                                                            <td><div>10</div></td>
+                                                            <td><div>11</div></td>
+                                                            <td><div>12</div></td>
+                                                            <td><div>13</div></td>
+                                                            <td><div>14</div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="today"><div>15</div></td>
+                                                            <td><div>16</div></td>
+                                                            <td><div>17</div></td>
+                                                            <td><div>18</div></td>
+                                                            <td><div>19</div></td>
+                                                            <td><div>20</div></td>
+                                                            <td><div>21</div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div>22</div></td>
+                                                            <td><div>23</div></td>
+                                                            <td><div>24</div></td>
+                                                            <td><div>25</div></td>
+                                                            <td><div>26</div></td>
+                                                            <td><div>27</div></td>
+                                                            <td><div>28</div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div>29</div></td>
+                                                            <td><div>30</div></td>
+                                                            <td class="disabled"><div>1</div></td>
+                                                            <td class="disabled"><div>2</div></td>
+                                                            <td class="disabled"><div>3</div></td>
+                                                            <td class="disabled"><div>4</div></td>
+                                                            <td class="disabled"><div>5</div></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+							<li class="input_area edit_pop" style="width: 100%; box-shadow: none; padding: 0 0; top: 0;">
+                                <label for="">첨부파일</label>
+								<div class="edit_data">
+									<input type="file" id="file_01">
+									<label for="file_01">파일선택</label>
+									
+									<div class="file_text">
+										<input type="text" placeholder="첨부파일 설명" value="빠른이체.hwp">
+										<a href="#none" class="btn_small02">등록</a>
+									</div>
+								</div>
+								
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="btn_area">
+                        <a href="work0100.html" class="btn_large_type02">취소하기</a>
+                        <a href="#" class="btn_large_type01" id="btn-work-request">등록하기</a>
+                    </div>
+				</div>
+			</div>
+		</div>
+		<!--// container-->
+	</div>
+
+	<script>
+        $(document).ready(function () {
+            localStorage.removeItem('requestWork');
+            localStorage.removeItem('workAccept');
+            localStorage.removeItem('workComplete');
+            $('#btn-work-request').click(function () {
+                var requestData = {
+                    id: 'A007',
+                    gubun: '변경',
+                    title: '빠른이체를 추가해주세요.',
+                    comment: '이체안에 빠른이체를 추가해주세요.',
+                    state: '미확인'
+                };
+    
+                localStorage.setItem('requestWork', JSON.stringify(requestData));
+
+                location.href = 'work0300.html';
+            });
+
+
+            function onKeyboardOnOff(isOpen) {
+                // Write down your handling code
+                if (isOpen) {
+                    // keyboard is open
+                } else {
+                    // keyboard is closed
+                }
+            }
+
+            var originalPotion = false;
+            $(document).ready(function(){
+                if (originalPotion === false) originalPotion = $(window).width() + $(window).height();
+            });
+
+            /**
+            * Determine the mobile operating system.
+            * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
+            *
+            * @returns {String}
+            */
+            function getMobileOperatingSystem() {
+                var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+                // Windows Phone must come first because its UA also contains "Android"
+                if (/windows phone/i.test(userAgent)) {
+                    return "winphone";
+                }
+
+                if (/android/i.test(userAgent)) {
+                    return "android";
+                }
+
+                // iOS detection from: http://stackoverflow.com/a/9039885/177710
+                if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    return "ios";
+                }
+
+                return "";
+            }
+
+            function applyAfterResize() {
+
+                if (getMobileOperatingSystem() != 'ios') {
+                    if (originalPotion !== false) {
+                        var wasWithKeyboard = $('body').hasClass('view-withKeyboard');
+                        var nowWithKeyboard = false;
+
+                            var diff = Math.abs(originalPotion - ($(window).width() + $(window).height()));
+                            if (diff > 100) nowWithKeyboard = true;
+
+                        $('body').toggleClass('view-withKeyboard', nowWithKeyboard);
+                        if (wasWithKeyboard != nowWithKeyboard) {
+                            onKeyboardOnOff(nowWithKeyboard);
+                        }
+                    }
+                }
+            }
+
+            $(document).on('focus blur', 'select, textarea, input[type=text], input[type=date], input[type=password], input[type=email], input[type=number]', function(e){
+                var $obj = $(this);
+                var nowWithKeyboard = (e.type == 'focusin');
+                $('body').toggleClass('view-withKeyboard', nowWithKeyboard);
+                onKeyboardOnOff(nowWithKeyboard);
+            });
+
+            $(window).on('resize orientationchange', function(){
+                applyAfterResize();
+            });
+        });
+
+
+    </script>
+
+</body>
+
+</html>

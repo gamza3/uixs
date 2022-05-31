@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-/mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kjb.uixs.resource.ResourceMapper">
+    <insert id="insert" parameterType="ResourceVO">
+    
+   		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+           SELECT UIXS_RESOURCE_SEQ.NEXTVAL AS id FROM DUAL
+       </selectKey>
+    	<![CDATA[
+		INSERT INTO UIXS_RESOURCE(
+			ID
+			,TYPE
+			,TITLE
+			,SITE_CODE
+		)
+		VALUES(
+			#{id}
+			,#{type}
+			,#{title}
+			,#{site_code}
+		)
+		]]>
+	</insert>
+	
+	
+	<select id="selectList" parameterType="HashMap" resultType="HashMap">
+		SELECT * FROM 
+		(
+		    SELECT ROWNUM AS SEQ, ID, TYPE, SAVE_FILENAME AS TITLE, SITE_CODE, REGDATE,
+		    		FILE_ID, UPLOAD_PATH
+		    FROM
+		        (
+			        SELECT * 
+			        FROM UIXS_RESOURCE R INNER JOIN UIXS_UPLOAD_FILES UF
+			        ON (R.ID = UF.REL_TABLE_KEY)
+			        <where> 
+			        	UF.REL_TABLE = 'RESOURCE'
+			        	<if test="site_code != null and !site_code.equals('')">
+			        		AND	R.SITE_CODE = #{site_code}
+			        	</if>
+			        	<if test="type != null and !type.equals('')">
+			        		AND	R.TYPE = #{type}
+			        	</if>
+			        </where>
+			        ORDER BY REGDATE DESC
+		        )
+		)
+		<![CDATA[
+		WHERE ROWNUM <= #{limit}
+		]]>
+	</select>
+</mapper>

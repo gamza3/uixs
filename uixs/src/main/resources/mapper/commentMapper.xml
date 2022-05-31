@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-/mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kjb.uixs.comment.CommentMapper">
+	<insert id="insert" parameterType="CommentVO">
+        
+        <selectKey keyProperty="cmt_no" resultType="int" order="BEFORE">
+            SELECT UIXS_BOARD_SEQ.NEXTVAL AS cmt_no FROM DUAL
+        </selectKey>
+        
+        INSERT INTO UIXS_BOARD(
+              CMT_NO
+            , WRITER_TYPE
+            , CONTENT
+            <if test="writer !=null and !writer.equals('')">
+            , WRITER
+            </if>
+            , REF
+            , REF_ID
+        )
+        VALUES(
+              #{cmt_no}
+            , #{writer_type}
+            , #{content}
+            <if test="writer !=null and !writer.equals('')">
+            , #{writer}
+            </if>
+            , #{ref}
+            , #{ref_id}
+        )
+    </insert>
+    
+    <select id="listAll" parameterType="String" resultType="HashMap">
+        SELECT A.*, B.USERNAME
+        FROM UIXS_BOARD A, UIXS_USER B
+        <!-- B LEFT OUTER JOIN UIXS_UPLOAD_FILES UF
+        ON (UF.REL_TABLE = 'UIXS_BOARD' AND B.CMT_NO = UF.REL_TABLE_KEY) -->
+        WHERE
+        	A.WRITER = B.USERID
+        <if test="ref != null and !ref.equals('') and ref_id != null and !ref_id.equals('')">
+	        AND
+	            REF = #{ref}
+	        AND 
+	            REF_ID = #{ref_id}
+        </if>
+        ORDER BY CMT_NO DESC
+    </select>
+    
+    <update id="update" parameterType="CommentVO">
+    	UPDATE UIXS_BOARD
+    	SET CONTENT = #{content}
+    	WHERE
+    		CMT_NO = #{cmt_no}
+    </update>
+    
+    <delete id="deleteComment" parameterType="String">
+    	DELETE FROM UIXS_BOARD WHERE CMT_NO = #{cmt_no}
+    </delete>
+</mapper>

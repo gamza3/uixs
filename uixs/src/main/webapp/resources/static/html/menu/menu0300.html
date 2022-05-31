@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>광주은행</title>
+<link rel="stylesheet" href="../../css/common.css">
+<script type="text/javascript" src="../../js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui.js"></script>
+
+<script type="text/javascript" src="../../js/html.popup.js"></script>
+<script type="text/javascript" src="../../js/kjbui.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<!--header-->
+		<div class="header">
+			<div>
+				<h1><a href="#none"><img src="../../img/img_logo.png" alt=""></a></h1>
+				<div class="channel_select mb40">
+					<div class="input_section">
+						<ul class="input_wrap">
+							<li class="input_area">
+								<label for="">채널명</label>
+								<div class="select_list"> <!--dropdown  열릴때 on클래스 추가, 아래 ul태그 block-->
+									<div class="active">
+										모바일뱅킹 <span class="bul_type01">개인</span>
+									</div>
+									<ul style="display: none; z-index: 10000;" class="option-list">
+										<li><a href="#none">모바일뱅킹 <span class="bul_type01">개인</span></a></li>
+										<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										<li><a href="../chan/chan0100.html">채널관리</a></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<nav>
+					<ul>
+						<li><a href="#none" class="on">작업관리</a></li>
+						<li><a href="#none">화면목록</a></li>
+						<li><a href="#none">권한관리</a></li>
+						<li><a href="#none">파일관리</a></li>
+					</ul>
+				</nav>
+				<a href="#none" class="btn_logout" style="display: none;">로그아웃</a>
+			</div>
+		</div>
+		<!--// header-->
+		<!--container-->
+		<div class="container">
+			
+			<div class="content">
+				<div class="content_inner">
+                    <div class="tit_area" >
+                        <h2 style="border-bottom: 0;">IA 관리</h2>
+                    </div>
+					
+					<ul class="view_list_wrap bor_top">
+						<li>
+							<div class="list link active">
+								<a href="#none"><strong>모바일뱅킹</strong> <span class="bul_type01">개인</span></a>
+								<div class="btn_edit_area">
+									<button type="button" class="btn_small01 download">다운로드</button>
+									<button type="button" class="btn_small01 listview">IA목록보기</button>
+								</div>
+							</div>
+							<div class="grey_list_type white">
+								<div class="left_con_area">
+                                    <div class="btn_menu">
+                                        <a href="#none" class="btn_mid_type03" id="add-menu">메뉴 추가하기</a>
+                                    </div>
+                                    <ul class="menu_list">
+                                        <li>
+                                            <a href="#none">조회</a>
+                                            <div class="btn_edit_area">
+                                                <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#none" class="active">이체</a>
+                                            <div class="btn_edit_area">
+                                                <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#none">펀드</a>
+                                            <div class="btn_edit_area">
+                                                <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#none">대출</a>
+                                            <div class="btn_edit_area">
+                                                <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#none">외환</a>
+                                            <div class="btn_edit_area">
+                                                <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#none">마이뱅킹관리</a>
+                                            <div class="btn_edit_area">
+                                                <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#none">공과금</a>
+                                            <div class="btn_edit_area">
+                                                <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#none">퇴직연금</a>
+                                            <div class="btn_edit_area">
+                                                <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="con_area">
+                                    <div class="tit_area">
+                                        <h2>이체</h2>
+                                        <div class="input_section">
+                                            <ul class="input_wrap">
+                                                <li class="input_area search_case">
+                                                    <label for="">화면명 검색</label>
+                                                    <input type="text" placeholder="화면명을 입력하세요" value="이체">
+                                                    <button type="button" class="btn_search"></button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="con_menu_list">
+                                        <ul>
+                                            <li>
+                                                <div class="inner">
+                                                    <button type="button" class="btn_minus" aria-controls="child-list1">하위메뉴 접기</button>
+                                                    <span>즉시<i>이체</i></span>
+                                                    <a href="#none" class="btn_small01 add-list-menu">메뉴추가</a>
+                                                    <div class="btn_edit_area">
+                                                        <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                        <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                                    </div>
+                                                </div>
+                                                <ul id="child-list1">
+                                                    <li>
+                                                        <div class="inner">
+                                                            <button type="button" class="btn_minus" aria-controls="child-list2">하위메뉴 접기</button>
+                                                            <span>당타행<i>이체</i></span>
+                                                            <a href="#none" class="btn_small01 add-list-menu">메뉴추가</a>
+                                                            <div class="btn_edit_area">
+                                                                <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                                <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                                            </div>
+                                                        </div>
+                                                        <ul  id="child-list2">
+                                                            <li>
+                                                                <div class="inner">
+                                                                    <span>1단계 - 출금계좌정보 입력</span>
+                                                                    <strong>화면ID <em>trns010100</em></strong>
+                                                                    <div class="btn_edit_area">
+                                                                        <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                                        <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="inner">
+                                                                    <span>1단계 - 출금계좌정보 입력</span>
+                                                                    <strong>화면ID <em>trns010100</em></strong>
+                                                                    <div class="btn_edit_area">
+                                                                        <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                                        <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="inner">
+                                                                    <span>2단계 - 입금계좌정보 입력</span>
+                                                                    <strong>화면ID <em>trns010200</em></strong>
+                                                                    <div class="btn_edit_area">
+                                                                        <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                                        <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="inner">
+                                                                    <span>3단계 - <i>이체</i>정보확인 및 추가인증</span>
+                                                                    <strong>화면ID <em>trns010300</em></strong>
+                                                                    <div class="btn_edit_area">
+                                                                        <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                                        <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="inner">
+                                                                    <span>4단계 - <i>이체</i>완료</span>
+                                                                    <strong>화면ID <em>trns010400</em></strong>
+                                                                    <div class="btn_edit_area">
+                                                                        <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                                        <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <div class="inner">
+                                                            <button type="button" class="btn_plus">하위메뉴 더보기</button>
+                                                            <span>다계좌<i>이체</i></span>
+                                                            <a href="#none" class="btn_small01 add-list-menu">메뉴추가</a>
+                                                            <div class="btn_edit_area">
+                                                                <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                                <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="inner">
+                                                            <button type="button" class="btn_plus">하위메뉴 더보기</button>
+                                                            <span><i>이체</i> 결과조회</span>
+                                                            <a href="#none" class="btn_small01 add-list-menu">메뉴추가</a>
+                                                            <div class="btn_edit_area">
+                                                                <button type="button" class="btn_small01 write none_txt">수정</button>
+                                                                <button type="button" class="btn_small01 delete none_txt">삭제</button>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+							</div>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--// container-->
+	</div>
+	
+</body>
+
+</html>

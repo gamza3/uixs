@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+	PUBLIC "-/mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	
+<configuration>
+	<!-- 
+	<settings>
+		 <setting name="logImpl" value="LOG4J"/>
+	</settings>
+	<properties resource="classpath:config.properties"></properties>
+	
+	 -->
+	<typeAliases>
+		<package name="com.kjb.uixs"/>
+	</typeAliases>
+	
+	<!-- 
+	<properties>
+		<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+		<property name="username" value=""/>
+		<property name="password" value=""/>
+	</properties>
+	 
+	 
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			
+			<dataSource type="POOLED">
+				<property name="driver" value="${db.driver}"/>
+				<property name="url" value="${db.url}"/>
+				<property name="username" value="${db.username}"/>
+				<property name="password" value="${db.password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+	-->
+	<!--
+	<mappers>
+		<mapper resource="classpath:/mapper/boardMapper.xml"/>
+		<mapper resource="classpath:/mapper/channelMapper.xml"/>
+		<mapper resource="classpath:/mapper/commentMapper.xml"/>
+		<mapper resource="classpath:/mapper/fileUploadMapper.xml"/>
+		<mapper resource="classpath:/mapper/iaMapper.xml"/>
+		<mapper resource="classpath:/mapper/messageMapper.xml"/>
+		<mapper resource="classpath:/mapper/resourceMapper.xml"/>
+		<mapper resource="classpath:/mapper/userMapper.xml"/>
+		<mapper resource="classpath:/mapper/workMapper.xml"/>
+	</mappers>
+
+	<settings>
+	    <setting name="logImpl" value="LOG4J2" />
+	</settings>
+	 -->
+</configuration>

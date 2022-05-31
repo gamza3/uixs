@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>광주은행</title>
+<link rel="stylesheet" href="../../css/common.css">
+<script type="text/javascript" src="../../js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../../js/jquery-ui.js"></script>
+
+<script type="text/javascript" src="../../js/html.popup.js"></script>
+<script type="text/javascript" src="../../js/kjbui.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<!--header-->
+		<div class="header">
+			<h1><a href="#none"><img src="../../img/img_logo.png" alt=""></a></h1>
+			<nav>
+				<ul>
+					<li><a href="#none">채널관리</a></li>
+					<li><a href="#none" class="on">IA생성</a></li>
+					<li><a href="#none">작업관리</a></li>
+					<li><a href="#none">화면목록</a></li>
+					<li><a href="#none">권한관리</a></li>
+					<li><a href="#none">파일관리</a></li>
+				</ul>
+			</nav>
+			<a href="#none" class="btn_logout" style="display: none;">로그아웃</a>
+			
+		</div>
+		<!--// header-->
+		<!--container-->
+		<div class="container">
+			
+			<div class="content">
+				<div class="content_inner">
+					<div class="channel_select mb40">
+                        <div class="input_section">
+							<ul class="input_wrap">
+								<li class="input_area">
+									<label for="">채널명</label>
+									<div class="select_list"> <!--dropdown  열릴때 on클래스 추가, 아래 ul태그 block-->
+										<div class="active">
+											모바일뱅킹 <span class="bul_type01">개인</span>
+										</div>
+										<ul style="display: none;" class="option-list">
+											<li><a href="#none">모바일뱅킹 <span class="bul_type01">개인</span></a></li>
+											<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+											<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+											<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+											<li><a href="#none">모바일뱅킹 <span class="bul_type03">개인</span></a></li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</div>
+                    </div>
+					<ul class="view_list_wrap bor_top">
+						<li>
+							<div class="grey_list_type white">
+								<div class="resource_area">
+                                    <div class="btn_menu">
+                                        <a href="#none" class="btn_mid_type03" id="add-menu">폴더 추가하기</a>
+                                    </div>
+                                    <ul>
+                                        <li><strong><a href="#none">Guide</a></strong>
+                                            <a href="#none" class="btn_small01">파일업로드</a>
+                                            <ul class="sub_file">
+                                                <li><a href="#none" class="new">Design_system_guide.pdf</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><strong><a href="#none">CSS</a></strong>
+                                            <a href="#none" class="btn_small01">파일업로드</a>
+                                            <ul class="sub_file">
+                                                <li><a href="#none" class="new">common.css</a></li>
+                                                <li><a href="#none">font.css</a></li>
+                                                <li><a href="#none">layout.css</a></li>
+                                                <li><a href="#none" class="new">main.css</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><strong><a href="#none">js</a></strong>
+                                            <a href="#none" class="btn_small01">파일업로드</a>
+                                            <ul class="sub_file">
+                                                <li><a href="#none" class="new">ui.js</a></li>
+                                                <li><a href="#none">swiper.min.js</a></li>
+                                                <li><a href="#none">jquery-1.11.0.min.js</a></li>
+                                                <li><a href="#none">html.popup.js</a></li>
+                                                <li><a href="#none">main.js</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="con_area">
+                                    <div class="file_visual">
+                                        <p>UI/UX 가이드 준수를위한 파일 관리를 위해<br>왼쪽의 파일을 클릭 후<br>Resources Files을 다운받아주세요.</p>
+                                    </div>
+                                    <dl class="file_history">
+                                        <dt>최근 업데이트 내역</dt>
+                                        <dd>
+                                            <ul>
+                                                <li>css > common.css<strong>2021.05.22</strong></li>
+                                                <li>Guide > Design_system_guide.pdf<strong>2021.05.10</strong></li>
+                                                <li>js > ui.js<strong>2021.05.05</strong></li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+							</div>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--// container-->
+	</div>
+	<div class="modal_layer_pop">
+        <div class="modal_layer_inner">
+            <div class="pop_tit">
+                <h1>파일 다운로드</h1>
+                <a href="#none" class="btn_pop_close" title="레이어팝업 닫기"></a>
+            </div>
+            <div class="pop_content">
+                
+                <div class="grey_list_type" style="padding: 20px; border-top: 1px solid #ddd;">
+                    <ul class="list_type01">
+                        <li>
+                            <dl>
+                                <dt>파일명</dt>
+                                <dd>common.css</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class="loading">
+                    <p>다운로드 중입니다.</p>
+                    <div>
+                        <span style="width: 100%;"></span>
+                        <em>100%</em>
+                    </div>
+                </div>
+                <div class="loading end" style="">
+                    <p>다운로드가 완료되었습니다.</p>
+                </div>
+                
+                <div class="pop_btn_area">
+                    <a href="#none" class="btn_large_type01">확인하기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
